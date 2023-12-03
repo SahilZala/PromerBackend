@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDetails {
+	private String articleNumber;
 	private String title;
 	private String subTitle;
 	private String description;

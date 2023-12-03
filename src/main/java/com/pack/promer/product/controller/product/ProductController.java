@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pack.promer.product.dto.ProductDto;
+import com.pack.promer.product.dto.ProductImageDto;
 import com.pack.promer.product.dto.ProductImagesS3BucketDto;
 import com.pack.promer.product.entity.ProductEntity;
+import com.pack.promer.product.entity.ProductImage;
 import com.pack.promer.product.util.APIPaths;
 
 @RestController
@@ -30,7 +33,7 @@ public class ProductController {
 	private ProductDto productDto;
 	
 	@Autowired
-	private ProductImagesS3BucketDto productImagesS3BucketDto;
+	private ProductImageDto productImageDto;
 	
 	@PostMapping(APIPaths.CREATE_PRODUCT)
 	public ResponseEntity<ProductEntity> create(@RequestBody ProductEntity productEntity)
@@ -48,11 +51,15 @@ public class ProductController {
 	
 	@PostMapping(APIPaths.UPLOAD_IMAGES)
 	@CrossOrigin
-	public ResponseEntity<List<String>> upload(@RequestParam("file") List<MultipartFile> file)
+	public ResponseEntity<?> upload(@RequestBody List<ProductImage> url)
 	{
-		log.info(""+file);
+		log.info(""+url);
 		
-		return new ResponseEntity<>(productImagesS3BucketDto.uploadImage(file),HttpStatus.OK);
+		url.forEach((product) -> {
+			productImageDto.createProdutImage(product);
+		});
+		
+		return new ResponseEntity<>(url,HttpStatus.OK);
 	}
 	
 }
