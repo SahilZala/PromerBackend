@@ -35,4 +35,10 @@ public class ProductImageServiceImpl implements ProductImageService{
 		return null;
 	}
 
+	@Override
+	public void deleteProductImageById(ProductImage productImage) {
+		this.productImageRepository.delete(productImage);
+		
+	}
+
 }

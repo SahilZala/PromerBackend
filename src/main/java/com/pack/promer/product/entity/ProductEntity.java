@@ -2,8 +2,10 @@ package com.pack.promer.product.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +31,7 @@ public class ProductEntity {
 	private ProductOrganization productOrganization;
 	private boolean activation;
 	
-	@Transient
+	@OneToMany(mappedBy = "productEntity",orphanRemoval = true)
 	private List<ProductImage> productImages;
 	
 }

@@ -8,23 +8,36 @@ import org.springframework.stereotype.Service;
 import com.pack.promer.product.dto.ProductDto;
 import com.pack.promer.product.entity.ProductEntity;
 import com.pack.promer.product.repository.ProductRepository;
+import com.pack.promer.product.service.ProductImageService;
+import com.pack.promer.product.service.ProductService;
 import com.pack.promer.product.util.AppUtility;
 
 @Service
 public class ProductDtoImpl implements ProductDto {
 
 	@Autowired
-	private ProductRepository productRepo;
+	private ProductService productService;
+	
+	@Autowired 
+	private ProductImageService productImageService;
+	
 	
 	@Override
 	public ProductEntity create(ProductEntity product) {
 		product.setId(AppUtility.getRandomeId());
-		return productRepo.save(product);
+		return productService.create(product);
 	}
 
 	@Override
 	public List<ProductEntity> getAll() {
-		return productRepo.findAll();
+		return productService.getAll();
+	}
+
+	@Override
+	public void deleteProductEntityById(ProductEntity product) {
+		
+		product.getProductImages().stream().forEach((data) -> productImageService.deleteProductImageById(data));
+		productService.deleteProductEntityById(product);
 	}
 
 	

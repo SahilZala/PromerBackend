@@ -22,6 +22,7 @@ import com.pack.promer.product.dto.ProductImagesS3BucketDto;
 import com.pack.promer.product.entity.ProductEntity;
 import com.pack.promer.product.entity.ProductImage;
 import com.pack.promer.product.util.APIPaths;
+import com.pack.promer.user.entity.Response;
 
 @RestController
 @CrossOrigin("*")
@@ -62,4 +63,11 @@ public class ProductController {
 		return new ResponseEntity<>(url,HttpStatus.OK);
 	}
 	
+	@PostMapping(APIPaths.DELETE_PRODUCT)
+	@CrossOrigin
+	public ResponseEntity<?> deleteEntireProuct(@RequestBody ProductEntity product)
+	{
+		productDto.deleteProductEntityById(product);
+		return new ResponseEntity<>(new Response(HttpStatus.OK.value(),"deleted successfully.",null),HttpStatus.OK);
+	}
 }

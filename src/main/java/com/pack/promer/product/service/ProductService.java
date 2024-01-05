@@ -6,5 +6,6 @@ import com.pack.promer.product.entity.ProductEntity;
 
 public interface ProductService {
 	public ProductEntity create(ProductEntity product);
+	public void deleteProductEntityById(ProductEntity id);
 	public List<ProductEntity> getAll();
 }
