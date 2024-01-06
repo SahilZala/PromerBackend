@@ -18,9 +18,6 @@ public class ProductDtoImpl implements ProductDto {
 	@Autowired
 	private ProductService productService;
 	
-	@Autowired 
-	private ProductImageService productImageService;
-	
 	
 	@Override
 	public ProductEntity create(ProductEntity product) {
@@ -36,7 +33,6 @@ public class ProductDtoImpl implements ProductDto {
 	@Override
 	public void deleteProductEntityById(ProductEntity product) {
 		
-		product.getProductImages().stream().forEach((data) -> productImageService.deleteProductImageById(data));
 		productService.deleteProductEntityById(product);
 	}
 
